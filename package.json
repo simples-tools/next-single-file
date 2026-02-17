@@ -1,0 +1,26 @@
+{
+  "name": "next-single-file",
+  "version": "1.0.0",
+  "description": "Convert Next.js static export to a single HTML file with hash routing",
+  "bin": {
+    "next-single-file": "./dist/cli.js"
+  },
+  "files": [
+    "dist/cli.js"
+  ],
+  "scripts": {
+    "build": "bun build ./index.ts --target node --outfile ./dist/cli.js && chmod +x ./dist/cli.js",
+    "test": "bun test",
+    "convert": "bun run ./index.ts"
+  },
+  "type": "module",
+  "workspaces": [
+    "test-next-app"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

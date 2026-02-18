@@ -66,12 +66,14 @@ module.exports = nextConfig;
 ### 2. Build Your Next.js App
 
 ```bash
+# Any pkg manager is fine
 bun run build
 ```
 
 ### 3. Generate Single HTML File
 
 ```bash
+# npx works too, you need bun installed on your system though
 bunx next-single-file --input out --output dist/index.html
 ```
 

@@ -55,14 +55,17 @@ const nextConfig = {
 
 module.exports = nextConfig;
 ```
+
 > [!WARNING]  
-> RSC is not supported via this as it requires a server and this is fully client side. All dynamic routes have to be linked to or pre defined. 
+> **Purely Client-Side Runtime**  
+> This tool generates a standalone bundle with no backend. 
+> - **Server Logic:** Features like Server Actions, `cookies()`, and Middleware are not supported.
+> - **Dynamic Routes:** You must use `generateStaticParams` for any dynamic paths (e.g., `[id].tsx`) to ensure they are pre-rendered into the `out/` directory before bundling.
+> - **RSC:** React Server Components are supported only insofar as they can be statically rendered to HTML at build time.
 
 ### 2. Build Your Next.js App
 
 ```bash
-npm run build
-# or
 bun run build
 ```
 

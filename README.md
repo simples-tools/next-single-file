@@ -1,39 +1,50 @@
-# Next.js Single HTML CLI 🚀
+# next-single-file
 
-A powerful CLI tool that transforms a Next.js static export into a **completely self-contained, single HTML file** with hash-based routing. Regex based, zero deps.
-## 📖 How it Works
+[![npm version](https://img.shields.io/npm/v/next-single-file?color=black)](https://www.npmjs.com/package/next-single-file)
+[![npm downloads](https://img.shields.io/npm/dm/next-single-file?color=blac)](https://www.npmjs.com/package/next-single-file)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+[![Bun](https://img.shields.io/badge/runtime-bun-black?logo=bun)](https://bun.sh)
 
-The tool crawls your `out/` directory, extracts all routes, and bundles them into a single file. It inlines all assets (JS, CSS, Fonts, Images) as Data URIs (base64) and injects a robust hash-based router.
+A CLI tool that transforms a Next.js static export into a **single, self-contained HTML file** with hash-based routing. Regex-based, zero runtime dependencies.
 
-### 🏗 Architecture
+## How it Works
+
+The tool parses your `out/` directory, extracts all routes, and bundles everything into one file. All assets (JS, CSS, fonts, images) are inlined as base64 data URIs, and a hash-based router is injected for client-side navigation.
 
 ```mermaid
 graph TD
     A[Next.js App] -->|next build| B[out/ Directory]
-    B -->|Parser| C[Asset Map \u0026 Routes]
-    C -->|Inliner| D[Data URIs \u0026 CSS/JS Bundles]
+    B -->|Parser| C[Asset Map & Routes]
+    C -->|Inliner| D[Data URIs & Bundles]
     D -->|Bundler| E[Single index.html]
-    F[Hash Router Shim] -->|Injected| E
-    
-    subgraph "Single HTML File"
-    E
-    end
-    
-    E -->|Browser| G[Hash-based Navigation]
-    G -->|#/about| H[DOM Swap via ROUTE_MAP]
+    F[Hash Router] -->|Injected| E
+    E -->|Browser| G[Hash Navigation]
 ```
 
-## 🛠 Features
+## Features
 
-- **Self-Contained**: Zero external dependencies. Fonts, images, and scripts are all inlined.
-- **Hash Routing**: Automatically converts path navigation to `#/hash` navigation.
-- **Next.js Compatibility**: Supports latest Next.js features like Geist fonts and Turbopack.
-- **Robust Escaping**: Uses Base64 encoding for the internal route map to prevent minified JS syntax errors.
-- **Shims**: Automatically shims `document.currentScript` and other browser APIs that Next.js expects.
+- **Self-Contained** — Zero external dependencies. Fonts, images, and scripts are all inlined.
+- **Hash Routing** — Automatically converts path navigation to `#/hash` navigation.
+- **Next.js Compatible** — Supports Geist fonts, Turbopack, and modern Next.js features.
+- **Robust Encoding** — Uses Base64 for the internal route map to prevent minification issues.
+- **Browser Shims** — Polyfills `document.currentScript` and other APIs Next.js expects.
 
-## 🚀 Usage
+## Installation
 
-### 1. Generate Static Export
+```bash
+bunx next-single-file --input out --output dist/index.html
+```
+
+Or with npm (requires Bun to be installed):
+
+```bash
+npx next-single-file --input out --output dist/index.html
+```
+
+## Usage
+
+### 1. Configure Next.js for Static Export
+
 Ensure your `next.config.js` has `output: 'export'`:
 
 ```javascript
@@ -41,35 +52,59 @@ Ensure your `next.config.js` has `output: 'export'`:
 const nextConfig = {
   output: 'export',
 };
+
 module.exports = nextConfig;
 ```
 
-Then build:
+### 2. Build Your Next.js App
+
 ```bash
 npm run build
 # or
 bun run build
 ```
 
-### 2. Run the Inliner
+### 3. Generate Single HTML File
+
 ```bash
-# you need bun installed (can be run by npm tho)
 bunx next-single-file --input out --output dist/index.html
-# or npm, needs bun installed
-npx next-single-file --input out --output dist/index.html
-
 ```
 
-## 🎯 Use Cases
+## Use Cases
 
-- **Portable Demos**: Send a fully functional web app as a single email attachment.
-- **Offline Documentation**: Create rich, interactive docs that work without an internet connection.
-- **Embedded UIs**: Embed a Next.js interface into desktop applications or hardware dashboards.
-- **Simple Hosting**: Host a multi-page app on GitHub Gists or any basic file server.
+| Use Case | Description |
+|----------|-------------|
+| **Portable Demos** | Send a fully functional web app as a single email attachment |
+| **Offline Documentation** | Create interactive docs that work without internet |
+| **Embedded UIs** | Embed Next.js interfaces into desktop apps or dashboards |
+| **Simple Hosting** | Host multi-page apps on GitHub Gists or basic file servers |
 
-## 🧪 Development
+## Benchmark
 
-To run the tests:
+Performance on the included test Next.js app (averaged over 3 runs):
+
+| Metric | Value |
+|--------|-------|
+| **Duration** | ~392 ms |
+| **Output Size** | ~13.9 MB |
+| **Memory Usage** | ~77 MB |
+
+Run your own benchmark:
+
 ```bash
-bun test
+bun run benchmark
 ```
+
+> Results may vary based on your app size and system. The test app includes 4 routes with images, fonts, and interactivity.
+
+## Development
+
+```bash
+bun install
+bun test
+bun run build
+```
+
+## License
+
+MIT

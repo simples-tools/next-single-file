@@ -1,7 +1,7 @@
 # next-single-file
 
 [![npm version](https://img.shields.io/npm/v/next-single-file?color=black)](https://www.npmjs.com/package/next-single-file)
-[![npm downloads](https://img.shields.io/npm/dm/next-single-file?color=blac)](https://www.npmjs.com/package/next-single-file)
+[![npm downloads](https://img.shields.io/npm/dm/next-single-file?color=black)](https://www.npmjs.com/package/next-single-file)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![Bun](https://img.shields.io/badge/runtime-bun-black?logo=bun)](https://bun.sh)
 

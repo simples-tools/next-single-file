@@ -55,6 +55,8 @@ const nextConfig = {
 
 module.exports = nextConfig;
 ```
+> [!WARNING]  
+> RSC is not supported via this as it requires a server and this is fully client side. All dynamic routes have to be linked to or pre defined. 
 
 ### 2. Build Your Next.js App
 

@@ -1,15 +1,15 @@
 {
   "name": "next-single-file",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert Next.js static export to a single HTML file with hash routing",
   "bin": {
-    "next-single-file": "./dist/cli.js"
+    "next-single-file": "dist/cli.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/simples-tools/next-single-file"
+    "url": "git+https://github.com/simples-tools/next-single-file.git"
   },
-  "author": "@brrock <github.com/brrock>",  
+  "author": "@brrock <github.com/brrock>",
   "files": [
     "dist/cli.js"
   ],

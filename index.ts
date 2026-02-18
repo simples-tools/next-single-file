@@ -49,3 +49,5 @@ await Bun.write(outputFile, html);
 
 console.log(`✅ Done! Output: ${outputFile}`);
 console.log(`   Size: ${(html.length / 1024).toFixed(1)} KB`);
+console.log("Star us: https://github.com/simples-tools/next-single-file");   
+console.log("Report bugs: https://github.com/simples-tools/next-single-file/issues");

@@ -1,6 +1,6 @@
 {
   "name": "next-single-file",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Convert Next.js static export to a single HTML file with hash routing",
   "bin": {
     "next-single-file": "dist/cli.js"

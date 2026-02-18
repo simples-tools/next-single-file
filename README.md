@@ -61,7 +61,7 @@ module.exports = nextConfig;
 > This tool generates a standalone bundle with no backend. 
 > - **Server Logic:** Features like Server Actions, `cookies()`, and Middleware are not supported.
 > - **Dynamic Routes:** You must use `generateStaticParams` for any dynamic paths (e.g., `[id].tsx`) to ensure they are pre-rendered into the `out/` directory before bundling.
-> - **RSC:** React Server Components are supported only insofar as they can be statically rendered to HTML at build time.
+> - **RSC:** React Server Components are supported if they can be statically rendered to HTML at build time.
 
 ### 2. Build Your Next.js App
 

@@ -33,7 +33,10 @@ const { inputDir, outputFile } = parseArgs();
 console.log(`📖 Parsing Next.js output from: ${inputDir}`);
 const parsed = await parseNextOutput(inputDir);
 
-console.log(`📦 Found ${parsed.routes.length} routes:`, parsed.routes.map((r: { path: string }) => r.path));
+console.log(`📦 Found ${parsed.routes.length} routes:`);
+for (const route of parsed.routes) {
+  console.log(`   ${route.path}`);
+}
 
 console.log(`🔧 Inlining assets...`);
 const inlined = await inlineAssets(parsed);

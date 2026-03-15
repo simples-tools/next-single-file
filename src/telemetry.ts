@@ -18,7 +18,10 @@ export async function sendTelemetry(time: number, ram: number): Promise<void> {
   }
 }
 
-export function getMemoryUsage(): number {
-  const usage = process.memoryUsage();
-  return Math.round(usage.heapTotal / 1024 / 1024);
+export function startMemoryTracking(): () => number {
+  const startMemory = process.memoryUsage().heapUsed;
+  return () => {
+    const endMemory = process.memoryUsage().heapUsed;
+    return Math.round((endMemory - startMemory) / 1024 / 1024);
+  };
 }

@@ -3,7 +3,7 @@ import { parseNextOutput } from "./src/parser";
 import { inlineAssets } from "./src/inliner";
 import { generateRouterShim } from "./src/router";
 import { bundleToSingleHtml } from "./src/bundler";
-import { sendTelemetry, getMemoryUsage } from "./src/telemetry";
+import { sendTelemetry, startMemoryTracking } from "./src/telemetry";
 import { $ } from "bun";
 
 function parseArgs() {
@@ -32,6 +32,7 @@ function parseArgs() {
 const { inputDir, outputFile } = parseArgs();
 
 const startTime = Date.now();
+const stopMemoryTracking = startMemoryTracking();
 
 console.log(`📖 Parsing Next.js output from: ${inputDir}`);
 const parsed = await parseNextOutput(inputDir);
@@ -54,7 +55,7 @@ await $`mkdir -p ${outputFile.split("/").slice(0, -1).join("/") || "."}`.quiet()
 await Bun.write(outputFile, html);
 
 const endTime = Date.now();
-const memoryUsed = getMemoryUsage();
+const memoryUsed = stopMemoryTracking();
 
 console.log(`✅ Done! Output: ${outputFile}`);
 console.log(`   Size: ${(html.length / 1024).toFixed(1)} KB`);

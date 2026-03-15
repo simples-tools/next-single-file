@@ -2,6 +2,7 @@ import { parseNextOutput } from "./parser";
 import { inlineAssets } from "./inliner";
 import { generateRouterShim } from "./router";
 import { bundleToSingleHtml } from "./bundler";
+import { startMemoryTracking } from "./telemetry";
 import { resolve } from "node:path";
 
 function getTestExportDir(): string {
@@ -24,7 +25,7 @@ interface BenchmarkResult {
 }
 
 async function benchmarkNative(exportDir: string): Promise<BenchmarkResult> {
-    const startMemory = process.memoryUsage().heapUsed;
+    const stopMemoryTracking = startMemoryTracking();
     const startTime = performance.now();
 
     const parsed = await parseNextOutput(exportDir);
@@ -33,13 +34,13 @@ async function benchmarkNative(exportDir: string): Promise<BenchmarkResult> {
     const html = bundleToSingleHtml(inlined, routerShim);
 
     const endTime = performance.now();
-    const endMemory = process.memoryUsage().heapUsed;
+    const memoryUsage = stopMemoryTracking();
 
     return {
         name: "next-single-file",
         duration: endTime - startTime,
         outputSize: Buffer.byteLength(html, "utf-8"),
-        memoryUsage: endMemory - startMemory,
+        memoryUsage,
     };
 }
 

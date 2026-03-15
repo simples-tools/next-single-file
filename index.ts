@@ -3,6 +3,7 @@ import { parseNextOutput } from "./src/parser";
 import { inlineAssets } from "./src/inliner";
 import { generateRouterShim } from "./src/router";
 import { bundleToSingleHtml } from "./src/bundler";
+import { sendTelemetry, getMemoryUsage } from "./src/telemetry";
 import { $ } from "bun";
 
 function parseArgs() {
@@ -30,6 +31,8 @@ function parseArgs() {
 
 const { inputDir, outputFile } = parseArgs();
 
+const startTime = Date.now();
+
 console.log(`📖 Parsing Next.js output from: ${inputDir}`);
 const parsed = await parseNextOutput(inputDir);
 
@@ -50,7 +53,16 @@ const html = bundleToSingleHtml(inlined, routerShim);
 await $`mkdir -p ${outputFile.split("/").slice(0, -1).join("/") || "."}`.quiet();
 await Bun.write(outputFile, html);
 
+const endTime = Date.now();
+const memoryUsed = getMemoryUsage();
+
 console.log(`✅ Done! Output: ${outputFile}`);
 console.log(`   Size: ${(html.length / 1024).toFixed(1)} KB`);
+console.log(`   Time: ${(endTime - startTime)} ms`);
+console.log(`   Memory: ${memoryUsed} MB`);
 console.log("Star us: https://github.com/simples-tools/next-single-file");   
 console.log("Report bugs: https://github.com/simples-tools/next-single-file/issues");
+
+if (process.env.NEXT_SINGLE_FILE_NO_TELEMETRY !== "1") {
+  await sendTelemetry(endTime - startTime, memoryUsed);
+}

@@ -104,6 +104,18 @@ bun run benchmark
 
 > Results may vary based on your app size and system. The test app includes 4 routes with images, fonts, and interactivity.
 
+## Telemetry
+
+Anonymized telemetry is collected to help improve the tool. **No IP addresses are tracked.** All we collect is time taken and RAM used. 
+
+To disable telemetry:
+
+```bash
+NEXT_SINGLE_FILE_NO_TELEMETRY=1 bunx next-single-file --input out
+```
+
+Telemetry is sent by default. Set the above env var to opt out.
+
 ## Development
 
 ```bash
